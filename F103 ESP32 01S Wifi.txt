@@ -1,0 +1,84 @@
+Configuration	F103 ESP32 01S Wifi
+STM32CubeMX 	6.17.0
+Date	05/14/2026
+MCU	STM32F103V8Tx
+
+
+
+PERIPHERALS	MODES	FUNCTIONS	PINS
+I2C1	I2C	I2C1_SCL	PB6
+I2C1	I2C	I2C1_SDA	PB7
+RCC	Crystal/Ceramic Resonator	RCC_OSC_IN	OSC_IN
+RCC	Crystal/Ceramic Resonator	RCC_OSC_OUT	OSC_OUT
+SYS	Serial Wire	SYS_JTCK-SWCLK	PA14
+SYS	Serial Wire	SYS_JTMS-SWDIO	PA13
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+USART2	Asynchronous	USART2_RX	PA3
+USART2	Asynchronous	USART2_TX	PA2
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+7	PC13-TAMPER-RTC	GPIO_Output	
+12	OSC_IN	RCC_OSC_IN	
+13	OSC_OUT	RCC_OSC_OUT	
+25	PA2	USART2_TX	
+26	PA3	USART2_RX	
+29	PA4	GPIO_Output	ESP_RST
+30	PA5	GPIO_Output	ESP_IO0
+72	PA13	SYS_JTMS-SWDIO	
+76	PA14	SYS_JTCK-SWCLK	
+92	PB6	I2C1_SCL	OLED_SCL
+93	PB7	I2C1_SDA	OLED_SDA
+PERIPHERALS	MODES	FUNCTIONS	PINS
+I2C1	I2C	I2C1_SCL	PB6
+I2C1	I2C	I2C1_SDA	PB7
+RCC	Crystal/Ceramic Resonator	RCC_OSC_IN	OSC_IN
+RCC	Crystal/Ceramic Resonator	RCC_OSC_OUT	OSC_OUT
+SYS	Serial Wire	SYS_JTCK-SWCLK	PA14
+SYS	Serial Wire	SYS_JTMS-SWDIO	PA13
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+USART2	Asynchronous	USART2_RX	PA3
+USART2	Asynchronous	USART2_TX	PA2
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+7	PC13-TAMPER-RTC	GPIO_Output	
+12	OSC_IN	RCC_OSC_IN	
+13	OSC_OUT	RCC_OSC_OUT	
+25	PA2	USART2_TX	
+26	PA3	USART2_RX	
+29	PA4	GPIO_Output	ESP_RST
+30	PA5	GPIO_Output	ESP_IO0
+72	PA13	SYS_JTMS-SWDIO	
+76	PA14	SYS_JTCK-SWCLK	
+92	PB6	I2C1_SCL	OLED_SCL
+93	PB7	I2C1_SDA	OLED_SDA
+
+
+
+SOFTWARE PROJECT
+
+Project Settings : 
+Project Name : F103 ESP32 01S Wifi
+Project Folder : H:\Programing_Files_IoT\STM32CubeIDE\workspace_2.1.1\STM32F103V8T6\F103 ESP32 01S Wifi
+Toolchain / IDE : STM32CubeIDE
+Firmware Package Name and Version : STM32Cube FW_F1 V1.8.7
+
+
+Code Generation Settings : 
+STM32Cube MCU packages and embedded software packs : Copy only the necessary library files
+Generate peripheral initialization as a pair of '.c/.h' files per peripheral : No
+Backup previously generated files when re-generating : No
+Delete previously generated files when not re-generated : Yes
+Set all free pins as analog (to optimize the power consumption) : No
+
+
+Toolchains Settings : 
+Compiler Optimizations : 
+
+
+
+
+

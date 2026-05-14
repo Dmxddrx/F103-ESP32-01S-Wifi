@@ -1,0 +1,17 @@
+#ifndef WIFI_H_
+#define WIFI_H_
+
+#include "stm32f1xx_hal.h"
+#include <string.h>
+#include <stdio.h>
+
+extern UART_HandleTypeDef huart2;
+
+// Function Prototypes
+int8_t WIFI_Init(void);
+int8_t WIFI_Connect(char* ssid, char* password);
+void WIFI_SendCommand(char* command);
+int8_t WIFI_WaitForResponse(char* expected_response, uint32_t timeout);
+int8_t WIFI_GetIP(char* ip_out);
+
+#endif /* WIFI_H_ */

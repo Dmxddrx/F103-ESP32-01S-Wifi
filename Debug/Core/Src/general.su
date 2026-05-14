@@ -1,0 +1,2 @@
+../Core/Src/general.c:8:6:General_Init	16	static
+../Core/Src/general.c:66:6:General_Run	8	static
