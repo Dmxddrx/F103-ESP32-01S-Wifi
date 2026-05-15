@@ -57,6 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define MAX9814_OUT_Pin GPIO_PIN_1
+#define MAX9814_OUT_GPIO_Port GPIOA
 #define ESP_RST_Pin GPIO_PIN_4
 #define ESP_RST_GPIO_Port GPIOA
 #define ESP_IO0_Pin GPIO_PIN_5

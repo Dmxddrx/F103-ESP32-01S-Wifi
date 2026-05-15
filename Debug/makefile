@@ -62,7 +62,7 @@ main-build: F103\ ESP32\ 01S\ Wifi.elf secondary-outputs
 
 # Tool invocations
 F103\ ESP32\ 01S\ Wifi.elf F103\ ESP32\ 01S\ Wifi.map: $(OBJS) $(USER_OBJS) H:\Programing_Files_IoT\STM32CubeIDE\workspace_2.1.1\STM32F103V8T6\F103\ ESP32\ 01S\ Wifi\STM32F103V8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "F103 ESP32 01S Wifi.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"H:\Programing_Files_IoT\STM32CubeIDE\workspace_2.1.1\STM32F103V8T6\F103 ESP32 01S Wifi\STM32F103V8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="F103 ESP32 01S Wifi.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "F103 ESP32 01S Wifi.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"H:\Programing_Files_IoT\STM32CubeIDE\workspace_2.1.1\STM32F103V8T6\F103 ESP32 01S Wifi\STM32F103V8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="F103 ESP32 01S Wifi.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

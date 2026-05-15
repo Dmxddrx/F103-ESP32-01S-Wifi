@@ -3,7 +3,8 @@
 
 #include "stm32f1xx_hal.h"
 #include "wifi.h"
-#include "oled.h" // Your provided header
+#include "oled.h"
+#include "max9814.h"
 
 // Configuration
 #define WIFI_SSID "Dialog 4G 208"
