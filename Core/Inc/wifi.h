@@ -14,4 +14,7 @@ void WIFI_SendCommand(char* command);
 int8_t WIFI_WaitForResponse(char* expected_response, uint32_t timeout);
 int8_t WIFI_GetIP(char* ip_out);
 
+int8_t WIFI_StartUDP(char* target_ip, uint16_t port);
+int8_t WIFI_SendUDPData(char* data);
+
 #endif /* WIFI_H_ */

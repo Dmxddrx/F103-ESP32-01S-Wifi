@@ -23,6 +23,7 @@ Core/Src/oled.o: ../Core/Src/oled.c ../Core/Inc/oled.h ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_iwdg.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  H:/Programing_Files_IoT/STM32CubeIDE/workspace_2.1.1/STM32F103V8T6/F103\ ESP32\ 01S\ Wifi/Drivers/Middlewares/SSD1306/ssd1306.h \
@@ -54,6 +55,7 @@ Core/Src/oled.o: ../Core/Src/oled.c ../Core/Inc/oled.h ../Core/Inc/main.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h:
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_iwdg.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 H:/Programing_Files_IoT/STM32CubeIDE/workspace_2.1.1/STM32F103V8T6/F103\ ESP32\ 01S\ Wifi/Drivers/Middlewares/SSD1306/ssd1306.h:

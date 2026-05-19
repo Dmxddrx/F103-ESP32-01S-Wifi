@@ -2,6 +2,8 @@
 #include "main.h" // ADDED: Needed for the ESP_RST_Pin definition
 #include "oled.h"
 
+extern IWDG_HandleTypeDef hiwdg;
+
 char buffer[512];
 
 void WIFI_SendCommand(char* command) {
@@ -14,8 +16,11 @@ int8_t WIFI_WaitForResponse(char* expected_response, uint32_t timeout) {
     uint16_t index = 0;
 
     while (HAL_GetTick() - startTime < timeout) {
+
+    	HAL_IWDG_Refresh(&hiwdg);
+
         uint8_t data;
-        if (HAL_UART_Receive(&huart2, &data, 1, 10) == HAL_OK) {
+        if (HAL_UART_Receive(&huart2, &data, 1, 1) == HAL_OK) {
             // SAFETY FIX: Prevent buffer overflow if expected response never arrives
             if (index < 511) {
                 buffer[index++] = data;
@@ -105,3 +110,41 @@ int8_t WIFI_GetIP(char* ip_out) {
     }
     return 0;
 }
+
+// WIFI_StartUDP tells the ESP to target your PC.
+int8_t WIFI_StartUDP(char* target_ip, uint16_t port) {
+    char cmd[128];
+    // Command format: AT+CIPSTART="UDP","192.168.1.50",8080
+    sprintf(cmd, "AT+CIPSTART=\"UDP\",\"%s\",%d\r\n", target_ip, port);
+
+    WIFI_SendCommand(cmd);
+
+    // Wait up to 2 seconds for the ESP to confirm the connection
+    return WIFI_WaitForResponse("OK", 2000);
+}
+
+
+// WIFI_SendUDPData handles the tricky 2-step process of asking the ESP for permission to send, waiting for the >, and then pushing the data.
+int8_t WIFI_SendUDPData(char* data) {
+    char cmd[32];
+    uint16_t len = strlen(data);
+
+    // 1. Tell ESP how many bytes we want to send (e.g., AT+CIPSEND=15)
+    sprintf(cmd, "AT+CIPSEND=%d\r\n", len);
+    WIFI_SendCommand(cmd);
+
+    // 2. Wait for the '>' prompt from the ESP indicating it is ready
+    if (WIFI_WaitForResponse(">", 50)) {
+
+        // 3. Send the actual sensor data string
+        WIFI_SendCommand(data);
+
+        // 4. Wait for confirmation that it was sent over Wi-Fi
+        if (WIFI_WaitForResponse("SEND OK", 50)) {
+            return 1; // Success
+        }
+    }
+    return 0; // Failed
+}
+
+

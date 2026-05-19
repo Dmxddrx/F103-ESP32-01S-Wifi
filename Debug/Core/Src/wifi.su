@@ -1,5 +1,7 @@
-../Core/Src/wifi.c:7:6:WIFI_SendCommand	16	static
-../Core/Src/wifi.c:11:8:WIFI_WaitForResponse	32	static
-../Core/Src/wifi.c:31:8:WIFI_Init	24	static
-../Core/Src/wifi.c:76:8:WIFI_Connect	144	static
-../Core/Src/wifi.c:89:8:WIFI_GetIP	32	static
+../Core/Src/wifi.c:9:6:WIFI_SendCommand	16	static
+../Core/Src/wifi.c:13:8:WIFI_WaitForResponse	32	static
+../Core/Src/wifi.c:36:8:WIFI_Init	24	static
+../Core/Src/wifi.c:81:8:WIFI_Connect	144	static
+../Core/Src/wifi.c:94:8:WIFI_GetIP	32	static
+../Core/Src/wifi.c:115:8:WIFI_StartUDP	144	static
+../Core/Src/wifi.c:128:8:WIFI_SendUDPData	56	static

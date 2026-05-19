@@ -1,6 +1,8 @@
 #include "general.h"
 #include <stdio.h> // Needed for sprintf
 
+extern IWDG_HandleTypeDef hiwdg;
+
 // --- Global Variables for STM32CubeMonitor ---
 volatile float global_db_value = 0.0f;        // Monitor the microphone
 volatile uint32_t global_loop_counter = 0;    // Monitor "CPU Activity"
@@ -25,7 +27,7 @@ void General_Init(I2C_HandleTypeDef *hi2c) {
 	MAX9814_Init(&hadc1);
 
     // 1. Initialize the Display
-    OLED_Init(hi2c);
+    OLED_Init(hi2c); // 50 ms
     OLED_Clear();
 
     // Project Title Boot Screen
@@ -59,13 +61,26 @@ void General_Init(I2C_HandleTypeDef *hi2c) {
         OLED_ClearArea(0, 46, 128, 10);
         OLED_Print(0, 46, "Connected!");
         wifi_is_connected = 1;
-
         OLED_Update();
 
 		// CRITICAL FIX: Wait 500ms here so the router can assign the IP!
 		HAL_Delay(500);
         // Fetch the IP address once connected
 		WIFI_GetIP(current_ip);
+
+		OLED_ClearArea(0, 46, 128, 10);
+		OLED_Print(0, 46, "Start UDP...");
+		OLED_Update();
+
+		if (WIFI_StartUDP(PC_IP, UDP_PORT)) {
+			OLED_ClearArea(0, 46, 128, 10);
+			OLED_Print(0, 46, "UDP Ready!");
+		} else {
+			OLED_ClearArea(0, 46, 128, 10);
+			OLED_Print(0, 46, "UDP Fail");
+		}
+		OLED_Update();
+		HAL_Delay(1000); // Give the user time to read the screen
 
     } else {
         OLED_ClearArea(0, 46, 128, 10);
@@ -118,8 +133,11 @@ void General_Run(void) {
 
 		// 3. Wi-Fi Transmission
 		if (wifi_is_connected) {
-			int len = snprintf(wifi_tx_buffer, sizeof(wifi_tx_buffer), "Audio: %.1f dB\r\n", global_db_value);
-			HAL_UART_Transmit(&huart2, (uint8_t*)wifi_tx_buffer, len, 100);
+			// Format the string (No \r\n needed anymore, just the raw text)
+			snprintf(wifi_tx_buffer, sizeof(wifi_tx_buffer), "Audio: %.1f dB", global_db_value);
+
+			// Use our new clean function
+			WIFI_SendUDPData(wifi_tx_buffer);
 		}
 	}
 
