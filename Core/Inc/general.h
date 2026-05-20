@@ -5,6 +5,7 @@
 #include "wifi.h"
 #include "oled.h"
 #include "max9814.h"
+#include "wcmcu75.h"
 
 // Configuration
 #define WIFI_SSID "Dialog 4G 208"

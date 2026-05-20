@@ -37,17 +37,28 @@ void General_Init(I2C_HandleTypeDef *hi2c) {
     OLED_Update();
 
     // 2. Initialize ESP-01S
-    OLED_Print(0, 16, "Init ESP-01S");
+    OLED_Print(0, 16, "Init");
+    OLED_Print(25, 16, "ESP-01S");
+    OLED_Print(65, 16, "WCMCU 75 ");
     OLED_Update();
 
+    // Initialize the Temperature Sensor using the same I2C handle
+	if (WCMCU75_Init(hi2c)) {
+		OLED_ClearArea(65, 26, 35, 10);
+		OLED_Print(65, 26, "READY"); // WCMCU READY
+	} else {
+		OLED_ClearArea(65, 26, 35, 10);
+		OLED_Print(65, 26, "FAIL"); // WCMCU FAIL
+	}
+
     if (WIFI_Init()) {
-    	OLED_ClearArea(0, 26, 128, 10);
-        OLED_Print(0, 26, "ESP-01S: READY");
+    	OLED_ClearArea(25, 26, 35, 10);
+        OLED_Print(25, 26, "READY"); // ESP-01S: READY
         esp_is_ready = 1;
         OLED_Update();
     } else {
-    	OLED_ClearArea(0, 26, 128, 10);
-        OLED_Print(0, 26, "ESP-01S: FAIL");
+    	OLED_ClearArea(25, 26, 35, 10);
+        OLED_Print(25, 26, "FAIL"); // ESP-01S: FAIL
         esp_is_ready = 0;
         OLED_Update();
         return; // Halt further execution if no ESP is found
@@ -110,9 +121,11 @@ void General_Run(void) {
     // Static variable so the OLED can share the latest reading from the Wi-Fi task
     static float db_history[5] = {0.0f};
 	static uint8_t db_count = 0;
+	static float current_temp = 0.0f;
 
     // Buffer for formatting the dB text
 	char mic_buffer[15];
+	char temp_buffer[16];
 	char wifi_tx_buffer[64];
 
 	// ==========================================================
@@ -123,6 +136,7 @@ void General_Run(void) {
 
 		// 1. Get the latest Decibel reading
 		global_db_value = MAX9814_Get_Decibels(&hadc1);
+		float current_temp = WCMCU75_ReadTemp();
 
 		// 2. Manage the 5-item list for the OLED
 		if (db_count >= 5) {
@@ -134,14 +148,14 @@ void General_Run(void) {
 		// 3. Wi-Fi Transmission
 		if (wifi_is_connected) {
 			// Format the string (No \r\n needed anymore, just the raw text)
-			snprintf(wifi_tx_buffer, sizeof(wifi_tx_buffer), "Audio: %.1f dB", global_db_value);
+			snprintf(wifi_tx_buffer, sizeof(wifi_tx_buffer), "Audio: %.1f dB | Temp: %.1f C", global_db_value, current_temp);
 
 			// Use our new clean function
 			WIFI_SendUDPData(wifi_tx_buffer);
 		}
 	}
 
-    // Update the OLED every 1 second
+    // Update the OLED every 100ms
 	// keep this decoupled from the mic read so the UI doesn't flicker wildly
     if (HAL_GetTick() - last_ui_update >= 100) {
         last_ui_update = HAL_GetTick();
@@ -150,27 +164,28 @@ void General_Run(void) {
 		global_i2c_error = HAL_I2C_GetError(&hi2c1);
 
         OLED_ClearArea(0, 0, 128, 15); // Clear Status bar
-        OLED_ClearArea(0, 16, 70, 48); // Clear details block
+        OLED_ClearArea(0, 16, 75, 48); // Clear details block
 
         OLED_Print(0, 0, "Status");
 
         // --- NEW: Print ESP Hardware Status ---
         if (esp_is_ready) {
-            OLED_Print(0, 16, "ESP-01S: OK");
+            if (wifi_is_connected) {
+                 OLED_Print(0, 16, "Wi-Fi ONLINE ");
+                 // Here you could send AT+CIPSEND to push sensor data
+
+                 OLED_Print(50, 0, current_ip);
+            } else {
+                 OLED_Print(0, 16, "Wi-Fi OFFLINE");
+                 // Add reconnect logic here if needed
+            }
         } else {
-            OLED_Print(0, 16, "ESP-01S: ERROR");
+            OLED_Print(0, 16, "ESP ERROR");
         }
 
-        // --- Print Wi-Fi Connection Status ---
-        if (wifi_is_connected) {
-             OLED_Print(0, 26, "Wi-Fi: ONLINE ");
-             // Here you could send AT+CIPSEND to push sensor data
-
-             OLED_Print(50, 0, current_ip);
-        } else {
-             OLED_Print(0, 26, "Wi-Fi: OFFLINE");
-             // Add reconnect logic here if needed
-        }
+        // --- NEW: Print Temperature at (0, 26) ---
+        snprintf(temp_buffer, sizeof(temp_buffer), "Temp: %.1f C", current_temp);
+		OLED_Print(0, 36, temp_buffer);
 
         // --- Print the latest Mic Decibel Value ---
         snprintf(mic_buffer, sizeof(mic_buffer), "Audio: %.1f dB", global_db_value);

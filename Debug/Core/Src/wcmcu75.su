@@ -1,0 +1,2 @@
+../Core/Src/wcmcu75.c:6:8:WCMCU75_Init	16	static
+../Core/Src/wcmcu75.c:16:7:WCMCU75_ReadTemp	40	static

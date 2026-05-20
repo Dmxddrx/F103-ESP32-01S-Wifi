@@ -27,7 +27,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Core/Inc/general.h ../Core/Inc/wifi.h ../Core/Inc/oled.h \
- ../Core/Inc/main.h ../Core/Inc/max9814.h
+ ../Core/Inc/main.h ../Core/Inc/max9814.h ../Core/Inc/wcmcu75.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -61,3 +61,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/oled.h:
 ../Core/Inc/main.h:
 ../Core/Inc/max9814.h:
+../Core/Inc/wcmcu75.h:

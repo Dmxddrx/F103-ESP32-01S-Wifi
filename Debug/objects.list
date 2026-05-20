@@ -7,6 +7,7 @@
 "./Core/Src/syscalls.o"
 "./Core/Src/sysmem.o"
 "./Core/Src/system_stm32f1xx.o"
+"./Core/Src/wcmcu75.o"
 "./Core/Src/wifi.o"
 "./Core/Startup/startup_stm32f103v8tx.o"
 "./Drivers/Middlewares/SSD1306/fonts.o"
